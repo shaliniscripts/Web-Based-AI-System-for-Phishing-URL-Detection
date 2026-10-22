@@ -26,7 +26,7 @@ app.post("/analyze", async (req, res) => {
       return res.status(400).json({ error: "URL is required" });
     }
 
-     const existing = await Url.findOne({ url: cleanUrl });
+     const existing = await Url.findOne({ url });
     if (existing) {
        console.log(" From DB");
       return res.json({

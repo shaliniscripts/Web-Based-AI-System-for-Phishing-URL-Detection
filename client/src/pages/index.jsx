@@ -17,9 +17,26 @@ const Index = () => {
   const [result, setResult] = useState(null);
   const [analyzing, setAnalyzing] = useState(false);
 
+
+  function isValidURL(value) {
+  try {
+    const url = new URL(value);
+
+    // Only allow HTTP/HTTPS
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
   // CONNECT TO BACKend
   const handleAnalyze = async () => {
     if (!url.trim()) return;
+
+     if (!isValidURL(value)) {
+       setError("Please enter a valid URL");
+       return;
+      }
 
     setAnalyzing(true);
 
@@ -51,6 +68,8 @@ const Index = () => {
         score: Math.round(data.probability * 100),
         flags: flags,
       });
+
+      setUrl("");
 
     } catch (err) {
       console.error("Error:", err);
